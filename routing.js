@@ -1,0 +1,1 @@
+var translationRouting = require('./translate');

@@ -1,0 +1,15 @@
+{
+  "name": "sithtranslator",
+  "version": "1.0.0",
+  "description": "sith translator using google translate api and sith translator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@vitalets/google-translate-api": "^3.0.0",
+    "express": "^4.17.1"
+  }
+}
