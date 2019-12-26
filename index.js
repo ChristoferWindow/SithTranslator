@@ -18,7 +18,9 @@ app.get('/', function (req, res) {
 *
 * @apiSuccess (200) {json}
 */
-app.get('/translate', translateController.translate)
+app.post('/translate',
+  translateController.translate
+)
 
 //Launch listening server on port 8081
 app.listen(8081, function () {

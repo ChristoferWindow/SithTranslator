@@ -1,13 +1,12 @@
 const translate = require('@vitalets/google-translate-api')
-const {query} = require('express-validator/check')
+const {query} = require('express-validator')
 
-exports.translate = function (req, res) {
+exports.translate = function (req, res, next) {
 
   const {text, from, to} = req.query;
 
-  if()
   translate(req.query.text, {from: req.query.from, to: req.query.to}).then(resTranslate => {
-    console.log(req);
+    console.log(resTranslate);
 
     res.send({
       'text': resTranslate.text,
@@ -17,7 +16,7 @@ exports.translate = function (req, res) {
 
       //=> nl
   }).catch(err => {
-      console.error(err);
+      next(err.message);
   });
 }
 
