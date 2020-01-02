@@ -5,12 +5,15 @@ exports.translate = function (req, res, next) {
 
   const {text, from, to} = req.query;
 
-  translate(req.query.text, {from: req.query.from, to: req.query.to}).then(resTranslate => {
+
+  translate(req.body.text, {from: req.body.from, to: req.body.to}).then(resTranslate => {
     console.log(resTranslate);
 
     res.send({
       'text': resTranslate.text,
-      'fromLanguage': resTranslate.from.language.iso,
+      'from': req.body.from,
+      'fromDetected': resTranslate.from.language.iso,
+      'to': req.body.to
     })
     console.log(resTranslate.from.language.iso);
 
@@ -18,16 +21,4 @@ exports.translate = function (req, res, next) {
   }).catch(err => {
       next(err.message);
   });
-}
-
-exports.validate = (method) => {
-  switch (method) {
-    case 'translate' : {
-      return [
-        query('text', 'Text to translate not specified').exists(),
-        query('from', 'From language not specified').exists(),
-        query('to', 'To language not specified').exists()
-      ]
-    }
-  }
 }

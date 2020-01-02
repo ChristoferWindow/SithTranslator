@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
-import api from './utils/api.js'
+import axios from 'axios';
+// import api from './utils/api.js'
 // import './TranslationForm.css';
 
 class TranslationForm extends React.Component {
@@ -15,6 +16,31 @@ class TranslationForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  translate(toTranslate, from, to){
+    console.log(axios.defaults.port);
+    axios.defaults.port = 8081;
+
+    let result =
+      axios.post('http://localhost:8081/translate', {
+        port: 8081,
+        text: toTranslate,
+        from: from,
+        to: to
+      })
+        // return response
+        // console.log( response);
+      .then(function (response) {
+        return response.data;
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    console.log(result);
+    console.log('helo');
+
+    return result;
+  }
+
   handleChange(event) {
     this.setState({value: event.target.value});
   }
@@ -22,7 +48,11 @@ class TranslationForm extends React.Component {
   handleSubmit(event) {
     // alert('Wysłano następujące wypracowanie: ' + this.state.value);
     console.log('Zapytanie' + this.state.value);
-    api.translate(this.state.value, '', 'en')
+    let translated = this.translate(this.state.value, '', 'en')
+
+    console.log(translated.data);
+    // this.setState({translatedText: translated.data.te});
+
     event.preventDefault();
   }
 
@@ -32,7 +62,7 @@ class TranslationForm extends React.Component {
         <label>
           Tekst do przetłumaczenia:
           <textarea value={this.state.value} onChange={this.handleChange} />
-          <p> Przetłumaczony tekst: {this.props.translatedText} </p>
+          <p> Przetłumaczony tekst: {this.state.translatedText} </p>
         </label>
         <input type="submit" value="Wyślij" />
       </form>

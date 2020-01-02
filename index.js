@@ -1,23 +1,27 @@
 //Load express module with `require` directive
-var express = require('express')
-var app = express()
-var translateController = require('./translate');
+const express = require('express')
+const app = express();
+const cors = require('cors')
+const bodyParser = require('body-parser');
+const translateController = require('./translate');
+
+const corsOptions = {
+    origin: '*',
+    allowedHeaders: ['Content-Type', 'Authorization', 'Content-Length', 'X-Requested-With', 'Accept'],
+    methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+app.use(cors(corsOptions));
+
+// Configuring body parser middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 //Define request response in root URL (/)
 app.get('/', function (req, res) {
   res.send('Hello World!')
 })
 
-/**
-* @api {post} /translate Translate text
-* @apiName Translate text
-*
-* @apiParam  {String} [text] Text to translate
-* @apiParam  {String} [from] From which language
-* @apiParam  {String} [to] To which language
-*
-* @apiSuccess (200) {json}
-*/
 app.post('/translate',
   translateController.translate
 )

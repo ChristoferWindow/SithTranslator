@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 function translate(toTranslate, from, to){
   console.log('he');
@@ -9,6 +9,7 @@ function translate(toTranslate, from, to){
       to: to
     })
     .then(function (response) {
+      return response
       console.log( response);
     })
     .catch(function (error) {
