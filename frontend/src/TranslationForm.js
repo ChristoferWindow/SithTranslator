@@ -29,7 +29,8 @@ class TranslationForm extends React.Component {
       })
         // return response
         // console.log( response);
-      .then(function (response) {
+      .then(function(response) {
+        console.log(response.data)
         return response.data;
       })
       .catch(function (error) {
@@ -50,8 +51,8 @@ class TranslationForm extends React.Component {
     console.log('Zapytanie' + this.state.value);
     let translated = this.translate(this.state.value, '', 'en')
 
-    console.log(translated.data);
-    // this.setState({translatedText: translated.data.te});
+    this.setState({translatedText: translated.text});
+    console.log('Text' + this.state.translatedText);
 
     event.preventDefault();
   }
