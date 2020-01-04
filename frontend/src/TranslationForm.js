@@ -1,9 +1,7 @@
 import React from 'react';
-import logo from './logo.svg';
 import axios from 'axios';
-import Button from 'react-bootstrap/Button';
-import InputGroup from 'react-bootstrap/InputGroup';
-import FormControl from 'react-bootstrap/FormControl';
+import {FormControl,InputGroup,Button,Container,Row,Col,Alert,Form} from 'react-bootstrap';
+import babyYoda from './img/babyyoda.png';
 // import api from './utils/api.js'
 // import './TranslationForm.css';
 
@@ -12,32 +10,30 @@ class TranslationForm extends React.Component {
     super(props);
     this.state = {
       value: 'Proszę napisać wypracowanie o swoim ulubionym elemencie DOM',
-      translatedText: ''
+      translatedText: 'Tutaj pojawi się przetłumaczony tekst'
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  translate(toTranslate, from, to){
+  translate(toTranslate, from, to) {
     console.log(axios.defaults.port);
     axios.defaults.port = 8081;
 
     let result =
-      axios.post('http://localhost:8081/translate', {
-        port: 8081,
-        text: toTranslate,
-        from: from,
-        to: to
-      })
-      .then(result => this.setState({
-        translatedText: result.data.text,
-      }))
-      .catch(function (error) {
-        console.log(error);
-      });
-    console.log(result);
-    console.log('helo');
+    axios.post('http://localhost:8081/translate', {
+      port: 8081,
+      text: toTranslate,
+      from: from,
+      to: to
+    })
+    .then(result => this.setState({
+      translatedText: result.data.text,
+    }))
+    .catch(function (error) {
+      console.log(error);
+    });
 
     return result;
   }
@@ -57,18 +53,26 @@ class TranslationForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Tekst do przetłumaczenia:
+    <div className="translationForm">
+      <Row className="justify-content-md-center formRow">
+        <Col xs lg="5" className="formElement">
+          <Form onSubmit={this.handleSubmit}>
+            <Form.Group controlId="formTranslate">
+                <Form.Label>Tekst do przetłumaczenia</Form.Label>
+                  <InputGroup>
+                    <FormControl as="textarea" aria-label="With textarea" onChange={this.handleChange}/>
+                  </InputGroup>
+                <Button type="submit" value="Wyślij" variant="dark" size="sm" >Tłumacz</Button>
+            </Form.Group>
+            </Form>
+          </Col>
+          <Col xs lg="5" className="formElement">
+            <p> Przetłumaczony tekst:</p>
+            <Alert variant="secondary"> {this.state.translatedText} </Alert>
+          </Col>
+        </Row>
+    </div>
 
-          <InputGroup>
-            <FormControl as="textarea" aria-label="With textarea" onChange={this.handleChange}/>
-          </InputGroup>
-          <p> Przetłumaczony tekst:</p>
-          <p> {this.state.translatedText} </p>
-        </label>
-        <Button as="input" type="submit" value="Wyślij" variant="dark" onChange={this.handleChange}/>
-      </form>
     );
   }
 }

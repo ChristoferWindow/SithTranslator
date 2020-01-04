@@ -7,7 +7,47 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+body, html {
+  background-color: #696969;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+.translationForm {
+  padding-top: 50px;
+  background-color: #696969;
+}
+.formElement{
+  background-color: white;
+  padding-top: 20px;
+}
+
+footer{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  background-color: white;
+  height: 50px;
+  width: 100%;
+  text-align: center;
+}
+.copyright{
+  margin-top: 10px;
+  margin-bottom: auto;
+}
+
+.babyYoda{
+    display: inline;
+    bottom:100px;
+    left:20px;
+    -webkit-animation:linear infinite alternate;
+    -webkit-animation-name: run;
+    -webkit-animation-duration: 5s;
+}
+@-webkit-keyframes run {
+    0% { left: 0;}
+    50%{ left : 100%;}
+    100%{ left: 0;}
 }

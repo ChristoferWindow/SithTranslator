@@ -1,12 +1,19 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import TranslationForm from './TranslationForm';
+import TopNavBar from './TopNavBar';
+import FooterBar from './FooterBar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
-    <TranslationForm/>
+    <>
+      <TopNavBar/>
+      <br/>
+
+      <TranslationForm/>
+      <FooterBar/>
+    </>
   );
 }
 
