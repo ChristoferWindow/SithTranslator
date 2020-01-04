@@ -1,6 +1,9 @@
 import React from 'react';
 import logo from './logo.svg';
 import axios from 'axios';
+import Button from 'react-bootstrap/Button';
+import InputGroup from 'react-bootstrap/InputGroup';
+import FormControl from 'react-bootstrap/FormControl';
 // import api from './utils/api.js'
 // import './TranslationForm.css';
 
@@ -27,12 +30,9 @@ class TranslationForm extends React.Component {
         from: from,
         to: to
       })
-        // return response
-        // console.log( response);
-      .then(function(response) {
-        console.log(response.data)
-        return response.data;
-      })
+      .then(result => this.setState({
+        translatedText: result.data.text,
+      }))
       .catch(function (error) {
         console.log(error);
       });
@@ -49,9 +49,7 @@ class TranslationForm extends React.Component {
   handleSubmit(event) {
     // alert('Wysłano następujące wypracowanie: ' + this.state.value);
     console.log('Zapytanie' + this.state.value);
-    let translated = this.translate(this.state.value, '', 'en')
-
-    this.setState({translatedText: translated.text});
+    this.translate(this.state.value, '', 'en');
     console.log('Text' + this.state.translatedText);
 
     event.preventDefault();
@@ -62,10 +60,14 @@ class TranslationForm extends React.Component {
       <form onSubmit={this.handleSubmit}>
         <label>
           Tekst do przetłumaczenia:
-          <textarea value={this.state.value} onChange={this.handleChange} />
-          <p> Przetłumaczony tekst: {this.state.translatedText} </p>
+
+          <InputGroup>
+            <FormControl as="textarea" aria-label="With textarea" onChange={this.handleChange}/>
+          </InputGroup>
+          <p> Przetłumaczony tekst:</p>
+          <p> {this.state.translatedText} </p>
         </label>
-        <input type="submit" value="Wyślij" />
+        <Button as="input" type="submit" value="Wyślij" variant="dark" onChange={this.handleChange}/>
       </form>
     );
   }
