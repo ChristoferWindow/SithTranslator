@@ -1,12 +1,6 @@
 import React from 'react';
 import Nav from 'react-bootstrap/Nav';
 import icon from './img/droid.png';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
-} from "react-router-dom";
 
 class TopNavBar extends React.Component {
   constructor(props) {
